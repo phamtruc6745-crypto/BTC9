@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Home</title>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!--IMAGE EFFECT-->
+    <div class="image-effect" id="image-effect-2">
+        <img src="images/off.png" class="fadeEffect">
+        <img src="images/on.png">
+    </div>
+
+    <!--Switch Button-->
+    <div class="switch-btn">
+        <div class="onoffswitch">
+            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox toggle-switch-2" id="myonoffswitch" tabindex="0" checked>
+            <label class="onoffswitch-label" for="myonoffswitch">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+            </label>
+        </div>
+    </div>
+
+    <script src="js/jquery-latest.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Hàm cập nhật theme theo trạng thái nút toggle
+            function applyTheme() {
+                if ($('#myonoffswitch').is(':checked')) {
+                    // "On": Chuyển sang theme nền sáng (on.png)
+                    $('img[src="images/on.png"]').addClass('fadeEffect');
+                    $('img[src="images/off.png"]').removeClass('fadeEffect');
+                } else {
+                    // "Off": Chuyển sang theme nền tối (off.png)
+                    $('img[src="images/off.png"]').addClass('fadeEffect');
+                    $('img[src="images/on.png"]').removeClass('fadeEffect');
+                }
+            }
+
+            // Gọi lúc trang vừa load
+            applyTheme();
+
+            // Xử lý khi người dùng toggle nút bấm
+            $('#myonoffswitch').on('change', function () {
+                applyTheme();
+            });
+        });
+    </script>
+</body>
+
+</html>
