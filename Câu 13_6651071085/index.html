@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Home</title>
+<meta charset="UTF-8">
+<!--Font Awesome CDN Link-->
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+	<div class="password-show-card">
+		<input type="password" class="input-control" placeholder="Enter Password">
+		<i class="fa fa-eye password-show"></i>
+		<!-- <i class="fa fa-eye-slash"></i> -->
+	</div>
+
+	
+<script src="js/jquery-latest.min.js"></script>
+	<script>	
+		/*Sau khi người dùng nhập vào mật khẩu, sử dụng Jquery để xử lý khi người dùng click vào 
+icon “Mắt” sẽ hiện ra nguyên bản mật khẩu đã nhập.*/
+		$(document).ready(function(){
+			
+			$(".password-show").click(function(){
+				var input = $(this).siblings(".input-control");
+				if(input.attr("type") === "password"){
+					input.attr("type", "text");
+					$(this).removeClass("fa-eye").addClass("fa-eye-slash");
+				}else{
+					input.attr("type", "password");
+					$(this).removeClass("fa-eye-slash").addClass("fa-eye");
+				}
+			});
+		});	
+	</script>
+</body>
+</html>
