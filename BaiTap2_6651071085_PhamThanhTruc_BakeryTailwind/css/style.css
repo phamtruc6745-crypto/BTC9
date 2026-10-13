@@ -1,0 +1,104 @@
+/* ============================================================
+   style.css – CSS bổ sung cho Bếp Nhà Dâu
+   Dùng cho các hiệu ứng mà Tailwind Play CDN chưa hỗ trợ sẵn
+   (animation tuỳ biến, keyframes, v.v.)
+   ============================================================ */
+
+/* ---- Smooth scroll toàn trang ---- */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ---- Fade-in animation cho Hero section ---- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#home .flex-1:first-child {
+  animation: fadeInUp 0.8s ease both;
+}
+
+#home .flex-1:last-child {
+  animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+/* ---- Float animation cho ảnh Hero ---- */
+@keyframes floatImage {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+#home img {
+  animation: floatImage 4s ease-in-out infinite;
+}
+
+/* ---- Hamburger button active state ---- */
+#hamburger.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+#hamburger.open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+#hamburger.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+#hamburger span {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* ---- Form submit success state ---- */
+.form-success {
+  border-color: #10b981 !important;
+  background-color: #ecfdf5 !important;
+}
+
+/* ---- Card article hover lift effect (bổ sung) ---- */
+article {
+  will-change: transform;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+article:hover {
+  transform: translateY(-4px);
+}
+
+/* ---- Sticky header shadow on scroll ---- */
+header.scrolled {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* ---- Mobile menu transition ---- */
+#mobile-menu {
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+/* ---- Footer link underline effect ---- */
+footer a {
+  position: relative;
+}
+
+footer a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: #f59e0b;
+  transition: width 0.3s ease;
+}
+
+footer a:hover::after {
+  width: 100%;
+}

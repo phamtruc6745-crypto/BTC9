@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Bếp Nhà Dâu – Tiệm bánh homemade thủ công, hương vị chân thành từ bếp nhà." />
+  <meta name="keywords" content="bánh ngọt, bánh kem, bánh tart, cookies, homemade, bếp nhà dâu" />
+  <meta name="author" content="Phạm Thanh Trúc – 6651071085" />
+  <title>Bếp Nhà Dâu – Tiệm Bánh Homemade</title>
+
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- CSS bổ sung (animation và một số hiệu ứng Tailwind chưa hỗ trợ sẵn) -->
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body class="font-sans text-stone-800 bg-white">
+
+  <!-- ===================== HEADER / NAVIGATION ===================== -->
+  <header class="bg-amber-50 shadow-md sticky top-0 z-50">
+    <nav class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
+
+      <!-- Logo -->
+      <a href="#" class="flex flex-col leading-tight">
+        <span class="text-2xl font-extrabold text-amber-700 tracking-wide">Bếp Bánh</span>
+        <span class="text-xs text-amber-500 italic tracking-widest">Homemade</span>
+      </a>
+
+      <!-- Menu desktop (ẩn trên mobile) -->
+      <ul class="hidden md:flex gap-8 text-sm font-semibold text-stone-600">
+        <li><a href="#home"   class="hover:text-amber-600 transition">trang chủ</a></li>
+        <li><a href="#menu"   class="hover:text-amber-600 transition">bánh ngọt</a></li>
+        <li><a href="#story"  class="hover:text-amber-600 transition">bánh kem</a></li>
+        <li><a href="#order"  class="hover:text-amber-600 transition">đặt bánh</a></li>
+        <li><a href="#footer" class="hover:text-amber-600 transition">liên hệ</a></li>
+      </ul>
+
+      <!-- Hamburger icon (hiển thị trên mobile, ẩn trên md+) -->
+      <button id="hamburger" class="md:hidden flex flex-col gap-1.5 cursor-pointer focus:outline-none" aria-label="Mở menu">
+        <span class="block w-6 h-0.5 bg-amber-700 rounded transition-all"></span>
+        <span class="block w-6 h-0.5 bg-amber-700 rounded transition-all"></span>
+        <span class="block w-6 h-0.5 bg-amber-700 rounded transition-all"></span>
+      </button>
+    </nav>
+
+    <!-- Mobile menu (ẩn mặc định, toggle bằng JS) -->
+    <div id="mobile-menu" class="hidden flex-col bg-amber-50 px-6 pb-4 md:hidden border-t border-amber-200">
+      <ul class="flex flex-col gap-4 text-sm font-semibold text-stone-600 pt-3">
+        <li><a href="#home"   class="hover:text-amber-600 transition" onclick="closeMobileMenu()">trang chủ</a></li>
+        <li><a href="#menu"   class="hover:text-amber-600 transition" onclick="closeMobileMenu()">bánh ngọt</a></li>
+        <li><a href="#story"  class="hover:text-amber-600 transition" onclick="closeMobileMenu()">bánh kem</a></li>
+        <li><a href="#order"  class="hover:text-amber-600 transition" onclick="closeMobileMenu()">đặt bánh</a></li>
+        <li><a href="#footer" class="hover:text-amber-600 transition" onclick="closeMobileMenu()">liên hệ</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ===================== SECTION: HERO ===================== -->
+  <section id="home" class="bg-amber-50 py-16 px-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-10">
+
+      <!-- Nội dung bên trái -->
+      <div class="flex-1 text-center md:text-left">
+        <h1 class="text-4xl md:text-6xl font-bold text-stone-800 leading-tight mb-4">
+          Hương vị thủ công<br/>
+          <span class="text-amber-600">chân thành</span>
+        </h1>
+        <p class="text-stone-600 text-base md:text-lg mb-8 max-w-md mx-auto md:mx-0">
+          Từng ổ bánh ngọt ngào, hương vị thủ công, trọn tình chăm của tiệm bánh homemade
+          <strong class="text-amber-700">Bếp Nhà Dâu</strong>.
+        </p>
+        <a href="#order"
+           class="inline-block bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-full font-semibold transition duration-300 shadow-md hover:shadow-lg">
+          Đặt ngay
+        </a>
+      </div>
+
+      <!-- Ảnh bên phải -->
+      <div class="flex-1 flex justify-center">
+        <img
+          src="../images/hero-cake.jpg"
+          alt="Bánh kem trang trí trái cây của Bếp Nhà Dâu"
+          class="w-full max-w-md rounded-3xl shadow-2xl object-cover aspect-square"
+          onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80'; this.onerror=null;"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION: MENU BÁNH ===================== -->
+  <!--
+    Ghi chú kỹ thuật (Utility-first vs Component-based):
+    Ở đây mỗi card bánh được xây dựng hoàn toàn bằng cách ghép các utility class nhỏ
+    (rounded-2xl, shadow-lg, overflow-hidden, bg-white, hover:shadow-xl, transition...)
+    thay vì dùng class "card" có sẵn như Bootstrap. Triết lý utility-first cho phép
+    tùy biến từng chi tiết mà không bị ràng buộc bởi style mặc định của component.
+  -->
+  <section id="menu" class="py-16 px-6 bg-white">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-3xl font-bold text-stone-800 mb-2 text-center">Menu Bánh</h2>
+      <p class="text-stone-500 text-center mb-10">Tất cả đều làm thủ công mỗi ngày, không chất bảo quản.</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Card bánh 1 -->
+        <article class="rounded-2xl shadow-lg overflow-hidden bg-white hover:shadow-xl transition duration-300 group">
+          <div class="overflow-hidden">
+            <img src="../images/banh-bong-lan.jpg" alt="Bánh Bông Lan Trứng Muối"
+                 class="w-full h-48 object-cover group-hover:scale-105 transition duration-300"
+                 onerror="this.src='https://images.unsplash.com/photo-1562440499-64c9a111f713?w=400&q=80'; this.onerror=null;" />
+          </div>
+          <div class="p-4">
+            <h3 class="font-bold text-stone-800 text-lg mb-1">Bánh Bông Lan Trứng Muối</h3>
+            <p class="text-stone-500 text-sm mb-3">Mềm xốp, nhân trứng muối thơm béo, lớp phủ phô mai chảy quyện.</p>
+            <span class="text-amber-600 font-bold text-base">350.000 đ</span>
+          </div>
+        </article>
+
+        <!-- Card bánh 2 -->
+        <article class="rounded-2xl shadow-lg overflow-hidden bg-white hover:shadow-xl transition duration-300 group">
+          <div class="overflow-hidden">
+            <img src="../images/banh-tart-trai-cay.jpg" alt="Bánh Tart Trái Cây"
+                 class="w-full h-48 object-cover group-hover:scale-105 transition duration-300"
+                 onerror="this.src='https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&q=80'; this.onerror=null;" />
+          </div>
+          <div class="p-4">
+            <h3 class="font-bold text-stone-800 text-lg mb-1">Bánh Tart Trái Cây</h3>
+            <p class="text-stone-500 text-sm mb-3">Vỏ tart giòn rụm, kem custard mịn màng, topping trái cây tươi ngọt.</p>
+            <span class="text-amber-600 font-bold text-base">250.000 đ</span>
+          </div>
+        </article>
+
+        <!-- Card bánh 3 -->
+        <article class="rounded-2xl shadow-lg overflow-hidden bg-white hover:shadow-xl transition duration-300 group">
+          <div class="overflow-hidden">
+            <img src="../images/cookies-tra-xanh.jpg" alt="Cookies Trà Xanh"
+                 class="w-full h-48 object-cover group-hover:scale-105 transition duration-300"
+                 onerror="this.src='https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400&q=80'; this.onerror=null;" />
+          </div>
+          <div class="p-4">
+            <h3 class="font-bold text-stone-800 text-lg mb-1">Cookies Trà Xanh</h3>
+            <p class="text-stone-500 text-sm mb-3">Cookies mềm dẻo, vị trà xanh nhẹ nhàng, thanh mát khó cưỡng.</p>
+            <span class="text-amber-600 font-bold text-base">120.000 đ</span>
+          </div>
+        </article>
+
+        <!-- Card bánh 4 -->
+        <article class="rounded-2xl shadow-lg overflow-hidden bg-white hover:shadow-xl transition duration-300 group">
+          <div class="overflow-hidden">
+            <img src="../images/banh-tart-trai-cay2.jpg" alt="Bánh Tart Trái Cây Đặc Biệt"
+                 class="w-full h-48 object-cover group-hover:scale-105 transition duration-300"
+                 onerror="this.src='https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&q=80'; this.onerror=null;" />
+          </div>
+          <div class="p-4">
+            <h3 class="font-bold text-stone-800 text-lg mb-1">Bánh Tart Trái Cây Đặc Biệt</h3>
+            <p class="text-stone-500 text-sm mb-3">Phiên bản đặc biệt với lớp jelly bóng đẹp, nhiều trái cây phong phú.</p>
+            <span class="text-amber-600 font-bold text-base">290.000 đ</span>
+          </div>
+        </article>
+
+        <!-- Card bánh 5 -->
+        <article class="rounded-2xl shadow-lg overflow-hidden bg-white hover:shadow-xl transition duration-300 group">
+          <div class="overflow-hidden">
+            <img src="../images/banh-tart-trai-cay3.jpg" alt="Bánh Tart Dâu Tây"
+                 class="w-full h-48 object-cover group-hover:scale-105 transition duration-300"
+                 onerror="this.src='https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&q=80'; this.onerror=null;" />
+          </div>
+          <div class="p-4">
+            <h3 class="font-bold text-stone-800 text-lg mb-1">Bánh Tart Dâu Tây</h3>
+            <p class="text-stone-500 text-sm mb-3">Dâu tây tươi căng mọng, kem tươi phủ đầy, vỏ tart vàng ươm.</p>
+            <span class="text-amber-600 font-bold text-base">280.000 đ</span>
+          </div>
+        </article>
+
+        <!-- Card bánh 6 -->
+        <article class="rounded-2xl shadow-lg overflow-hidden bg-white hover:shadow-xl transition duration-300 group">
+          <div class="overflow-hidden">
+            <img src="../images/cookies-tra-xanh2.jpg" alt="Cookies Hạnh Nhân"
+                 class="w-full h-48 object-cover group-hover:scale-105 transition duration-300"
+                 onerror="this.src='https://images.unsplash.com/photo-1612203985729-70726954388c?w=400&q=80'; this.onerror=null;" />
+          </div>
+          <div class="p-4">
+            <h3 class="font-bold text-stone-800 text-lg mb-1">Cookies Hạnh Nhân</h3>
+            <p class="text-stone-500 text-sm mb-3">Giòn rụm, thơm béo từ hạnh nhân rang, hậu vị ngọt nhẹ dễ chịu.</p>
+            <span class="text-amber-600 font-bold text-base">150.000 đ</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION: CÂU CHUYỆN THƯƠNG HIỆU ===================== -->
+  <section id="story" class="py-16 px-6 bg-amber-50">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold text-stone-800 mb-8 text-center">Câu chuyện thương hiệu</h2>
+
+      <div class="flex flex-col md:flex-row gap-10 items-center">
+        <div class="flex-1">
+          <img src="../images/story.jpg" alt="Bếp bánh thủ công Bếp Nhà Dâu"
+               class="rounded-2xl shadow-xl w-full object-cover aspect-video md:aspect-square max-w-sm mx-auto"
+               onerror="this.src='https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80'; this.onerror=null;" />
+        </div>
+
+        <div class="flex-1 text-stone-600 leading-relaxed space-y-4">
+          <p>
+            <strong class="text-amber-700 font-semibold">Bếp Nhà Dâu</strong> ra đời từ một góc bếp nhỏ ấm áp,
+            nơi những chiếc bánh đầu tiên được nướng bằng tình yêu và sự tỉ mỉ của người con gái tên <em>Dâu</em>.
+          </p>
+          <p>
+            Chúng tôi tin rằng <strong class="text-amber-700 font-semibold">hương vị thật sự</strong> đến từ
+            nguyên liệu tươi ngon và đôi tay thủ công — không có máy móc công nghiệp, không chất bảo quản,
+            chỉ có <em>trái tim và tâm huyết</em> trên từng ổ bánh.
+          </p>
+          <p>
+            Mỗi ngày, tiệm chỉ nhận số lượng giới hạn để đảm bảo chất lượng tốt nhất gửi đến tay bạn —
+            vì với <strong class="text-amber-700 font-semibold">Bếp Nhà Dâu</strong>,
+            <em>mỗi chiếc bánh là một món quà</em>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MAIN + ASIDE: ĐẶT BÁNH ===================== -->
+  <div class="py-16 px-6 bg-white">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+      <!-- Main content (lg:col-span-2) -->
+      <main class="lg:col-span-2">
+        <h2 class="text-3xl font-bold text-stone-800 mb-4">Vì sao chọn Bếp Nhà Dâu?</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div class="flex gap-4 items-start">
+            <span class="text-3xl">🎂</span>
+            <div>
+              <h3 class="font-bold text-stone-700 mb-1">100% thủ công</h3>
+              <p class="text-stone-500 text-sm">Làm tay từng chiếc, không máy sản xuất hàng loạt.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 items-start">
+            <span class="text-3xl">🌿</span>
+            <div>
+              <h3 class="font-bold text-stone-700 mb-1">Nguyên liệu tươi sạch</h3>
+              <p class="text-stone-500 text-sm">Trái cây tươi, bơ nhập, bột mì cao cấp mỗi ngày.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 items-start">
+            <span class="text-3xl">🚚</span>
+            <div>
+              <h3 class="font-bold text-stone-700 mb-1">Giao hàng tận nơi</h3>
+              <p class="text-stone-500 text-sm">Ship nội thành trong ngày, đảm bảo bánh còn tươi.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 items-start">
+            <span class="text-3xl">🎁</span>
+            <div>
+              <h3 class="font-bold text-stone-700 mb-1">Đặt theo yêu cầu</h3>
+              <p class="text-stone-500 text-sm">In ảnh, thiết kế riêng, size custom theo dịp.</p>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Aside: Đặt bánh theo yêu cầu (lg:col-span-1) -->
+      <aside id="order" class="bg-amber-50 border border-amber-200 rounded-xl p-6 self-start">
+        <h2 class="text-xl font-bold text-stone-800 mb-4">Đặt Bánh Theo Yêu Cầu</h2>
+
+        <!--
+          FORM đặt bánh — Content Interactive
+          Dùng focus:ring-2 focus:ring-amber-500 để thể hiện cách
+          Tailwind xử lý trạng thái tương tác (hover:, focus:) ngay trong HTML
+        -->
+        <form id="order-form" class="flex flex-col gap-4" novalidate>
+          <div>
+            <label for="name" class="block text-sm font-semibold text-stone-600 mb-1">Tên</label>
+            <input
+              id="name" type="text" name="name" placeholder="Nguyễn Văn A"
+              required
+              class="w-full border border-stone-300 rounded-lg px-4 py-2 text-sm outline-none
+                     focus:ring-2 focus:ring-amber-500 focus:border-transparent transition"
+            />
+          </div>
+
+          <div>
+            <label for="phone" class="block text-sm font-semibold text-stone-600 mb-1">Số điện thoại</label>
+            <input
+              id="phone" type="tel" name="phone" placeholder="0901 234 567"
+              required
+              class="w-full border border-stone-300 rounded-lg px-4 py-2 text-sm outline-none
+                     focus:ring-2 focus:ring-amber-500 focus:border-transparent transition"
+            />
+          </div>
+
+          <div>
+            <label for="cake-type" class="block text-sm font-semibold text-stone-600 mb-1">Loại bánh yêu cầu</label>
+            <input
+              id="cake-type" type="text" name="cake-type" placeholder="Bánh kem sinh nhật, tart, cookies..."
+              class="w-full border border-stone-300 rounded-lg px-4 py-2 text-sm outline-none
+                     focus:ring-2 focus:ring-amber-500 focus:border-transparent transition"
+            />
+          </div>
+
+          <div>
+            <label for="note" class="block text-sm font-semibold text-stone-600 mb-1">Ghi chú</label>
+            <textarea
+              id="note" name="note" rows="3"
+              placeholder="Kích thước, hương vị, thời gian nhận hàng..."
+              class="w-full border border-stone-300 rounded-lg px-4 py-2 text-sm outline-none
+                     focus:ring-2 focus:ring-amber-500 focus:border-transparent transition resize-none"
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            class="bg-amber-600 hover:bg-amber-700 text-white font-semibold py-2.5 rounded-lg
+                   transition duration-300 shadow hover:shadow-md"
+          >
+            Send ngay
+          </button>
+        </form>
+      </aside>
+    </div>
+  </div>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer id="footer" class="bg-stone-900 text-stone-200 py-12 px-6">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+
+      <!-- Cột 1: Giới thiệu -->
+      <div>
+        <h3 class="text-amber-400 font-bold text-lg mb-3">Bếp Bánh Nhà Dâu</h3>
+        <p class="text-stone-400 text-sm leading-relaxed">
+          Tiệm bánh homemade thủ công,<br/>
+          hương vị thủ công từ trái tim.
+        </p>
+      </div>
+
+      <!-- Cột 2: Link hệ thống -->
+      <div>
+        <h4 class="text-stone-100 font-semibold mb-3">Liên hệ</h4>
+        <ul class="text-stone-400 text-sm space-y-2">
+          <li><a href="#home"  class="hover:text-amber-400 transition">trang chủ</a></li>
+          <li><a href="#menu"  class="hover:text-amber-400 transition">bánh ngọt</a></li>
+          <li><a href="#story" class="hover:text-amber-400 transition">bánh kem</a></li>
+          <li><a href="#order" class="hover:text-amber-400 transition">liên hệ</a></li>
+        </ul>
+      </div>
+
+      <!-- Cột 3: Liên hệ -->
+      <div>
+        <h4 class="text-stone-100 font-semibold mb-3">Contact</h4>
+        <ul class="text-stone-400 text-sm space-y-2">
+          <li>123 Đường Bánh, TP. HCM</li>
+          <li>
+            <a href="mailto:banhne@bepnhadau.com" class="hover:text-amber-400 transition">
+              banhne@bepnhadau.com
+            </a>
+          </li>
+          <li>
+            <a href="tel:0901234567" class="hover:text-amber-400 transition">0900 000 001</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Cột 4: Giờ mở cửa & Mạng xã hội -->
+      <div>
+        <h4 class="text-stone-100 font-semibold mb-3">Social</h4>
+        <div class="flex gap-4 mb-4">
+          <a href="#" aria-label="Facebook"
+             class="w-9 h-9 rounded-full bg-stone-700 flex items-center justify-center hover:bg-amber-600 transition">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="#" aria-label="Instagram"
+             class="w-9 h-9 rounded-full bg-stone-700 flex items-center justify-center hover:bg-amber-600 transition">
+            <svg class="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+        </div>
+        <p class="text-stone-400 text-sm font-semibold mb-1">Giờ mở cửa:</p>
+        <p class="text-stone-400 text-sm">Thứ 2 – CN: 8:00 – 21:00</p>
+      </div>
+    </div>
+
+    <!-- Bản quyền -->
+    <div class="border-t border-stone-700 mt-10 pt-6 text-center text-stone-500 text-xs">
+      &copy; 2026 Bếp Bánh Nhà Dâu. MSSV: 6651071085 – Phạm Thanh Trúc. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Script JS -->
+  <script src="../js/script.js"></script>
+</body>
+</html>
