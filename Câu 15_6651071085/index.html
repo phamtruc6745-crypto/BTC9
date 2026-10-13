@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tạo tabs trong jQuery</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" ></script>
+
+       
+    </head>
+    <body>
+        <div class="tab-wrapper" >
+            <ul class="tab">
+                <li>
+                    <a href="#tab-main-info">Thông tin chính</a>
+                </li>
+                <li>
+                    <a href="#tab-image">Hình ảnh</a>
+                </li>
+                <li>
+                    <a href="#tab-seo">SEO</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-item" id="tab-main-info">
+                    Tab thông tin chinh
+                </div>
+                <div class="tab-item" id="tab-image">
+                    Tab hình ảnh
+                </div>
+                <div class="tab-item" id="tab-seo">
+                    Tab SEO
+                </div>
+            </div>
+        </div>
+        <script>
+        $(document).ready(function () {
+            // Mặc định tab đầu tiên active và hiển thị nội dung tab đầu tiên
+            $('.tab li').removeClass('active');
+            $('.tab li:first-child').addClass('active');
+            $('.tab-content .tab-item').hide();
+            $('.tab-content .tab-item:first-child').show();
+
+            // Xử lý hiệu ứng chuyển tab bằng jQuery
+            $('.tab li a').on('click', function (e) {
+                e.preventDefault();
+
+                // Đổi class active ở tab menu
+                $('.tab li').removeClass('active');
+                $(this).parent('li').addClass('active');
+
+                // Ẩn tất cả nội dung tab và hiển thị nội dung tab tương ứng
+                var targetId = $(this).attr('href');
+                $('.tab-content .tab-item').hide();
+                $(targetId).fadeIn(200);
+            });
+        });
+    </script>
+    </body>
+</html>
